@@ -2,7 +2,7 @@
     @if(!empty($folder['subDirectories']))
         <ul>
             @foreach($folder['subDirectories'] as $subDirectory)
-                @include('partials.folder', ['folder' => $subDirectory])
+                @include('webzille-filemanager::partials.folder', ['folder' => $subDirectory])
             @endforeach
         </ul>
     @endif
