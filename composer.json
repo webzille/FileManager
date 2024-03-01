@@ -22,10 +22,7 @@
     "autoload": {
         "psr-4": {
             "Webzille\\FileManager\\": "src/"
-        },
-        "files": [
-            "src/helper.php"
-        ]
+        }
     },
     "extra": {
         "laravel": {
