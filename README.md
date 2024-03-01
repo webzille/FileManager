@@ -10,6 +10,10 @@ To get the package so far, you need to add the `:dev-main` at the end of the req
 
 > composer require webzille/filemanager:dev-main
 
+After requiring the package, you need to create a symbolic link to where the filemanager will upload the files to
+
+> php artisan storage:link
+
 Below are the instructions to implement the filemanager with SimpleMDE, but you can use the filemanager with any
 editor of your choice. Only differences would be are how you add a custom button to the editor and how you append
 the generated markdown/html to the editor.
