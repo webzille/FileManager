@@ -8,7 +8,7 @@ if (!function_exists('packageAsset')) {
         if (file_exists($assetPath)) {
             return asset('webzille/filemanager/' . $path);
         } else {
-            return asset('webzille/filemanager/public' . $path);
+            return asset('../vendor/webzille/filemanager/public' . $path);
         }
     }
 }
