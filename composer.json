@@ -2,8 +2,7 @@
     "name": "webzille/filemanager",
     "description": "Filemanager for laravel",
     "require": {
-        "php": "^7.4",
-        "webzille/filemanager": "1.0.0"
+        "php": "^7.4"
     },
     "repositories": [
         {
