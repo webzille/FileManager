@@ -8,9 +8,7 @@ trait Path {
     {
         $parts = explode('/', trim(parse_url($url, PHP_URL_PATH), '/'));
         
-        array_shift($parts);
-        
-        $filePath = implode('/', $parts);
+        $filePath = implode('/', array_slice($parts, 3));
 
         return str_replace('\\', '/', public_path("storage/{$filePath}"));
     }
