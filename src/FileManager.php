@@ -17,7 +17,7 @@ class FileManager
 
         $request = Request::create('/files/retrieve', 'POST', ['folder' => $this->environment->public]);
 
-        return view('filemanager.files', [
+        return view('vendor.webzille-filemanager::files', [
             'type'      => $this->environment->environment,
             'root'      => $this->environment->public,
             'folders'   => $this->listDirectories($this->environment->public),
