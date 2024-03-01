@@ -1,0 +1,25 @@
+{
+    "name": "webzille/filemanager",
+    "autoload": {
+        "psr-4": {
+            "Webzille\\Filemanager\\": "src/",
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webzille\\FileManager\\FileManagerServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Bogdan Lupandin",
+            "email": "elitezenithweb@gmail.com"
+        },
+        {
+            "name": "webzille.com",
+            "email": "admin@webzille.com"
+        }
+    ],
+}
