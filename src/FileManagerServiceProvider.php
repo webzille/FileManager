@@ -18,6 +18,8 @@ class FileManagerServiceProvider extends ServiceProvider
             __DIR__.'/../views'  => base_path('resources/views/vendor/webzille-filemanager'),
         ], 'filemanager_view');
         
+        $this->loadViewsFrom(__DIR__.'/../views', 'webzille-filemanager');
+        
         $this->loadRoutesFrom(__DIR__.'/../routes/filemanager.php');
     }
 }
