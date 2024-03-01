@@ -21,7 +21,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Webzille\\FileManager\\": "src/",
+            "Webzille\\FileManager\\": "src/"
         }
     },
     "extra": {
