@@ -14,6 +14,10 @@ After requiring the package, you need to create a symbolic link to where the fil
 
 > php artisan storage:link
 
+And the public files needs to be published to load the CSS files
+
+> php artisan vendor:publish --tag=filemanager_public
+
 Below are the instructions to implement the filemanager with SimpleMDE, but you can use the filemanager with any
 editor of your choice. Only differences would be are how you add a custom button to the editor and how you append
 the generated markdown/html to the editor.
