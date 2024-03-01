@@ -13,12 +13,12 @@ class FileManagerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/webzille-filemanager'),
         ], 'filemanager_public');
-
-        $this->publishes([
-            __DIR__.'/../views'  => base_path('resources/views/vendor/webzille-filemanager'),
-        ], 'filemanager_view');
         
         $this->loadViewsFrom(__DIR__.'/../views', 'webzille-filemanager');
+
+        $this->publishes([
+            __DIR__.'/../views'  => resource_path('views/vendor/webzille-filemanager'),
+        ], 'filemanager_views');
         
         $this->loadRoutesFrom(__DIR__.'/../routes/filemanager.php');
     }
