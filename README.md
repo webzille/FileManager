@@ -6,9 +6,9 @@ filemanager more configurable.
 
 Many other features are planned... this is a dev version.
 
-To get the package so far, you need to add the `:dev-master` at the end of the require statement
+To get the package so far, you need to add the `:dev-main` at the end of the require statement
 
-> composer require webzille/filemanager:dev-master
+> composer require webzille/filemanager:dev-main
 
 Below are the instructions to implement the filemanager with SimpleMDE, but you can use the filemanager with any
 editor of your choice. Only differences would be are how you add a custom button to the editor and how you append
