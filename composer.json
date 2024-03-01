@@ -3,7 +3,7 @@
     "description": "Filemanager for laravel",
     "require": {
         "php": "^7.4",
-        "vendor/package": "dev-master"
+        "webzille/filemanager": "1.0.0"
     },
     "repositories": [
         {
