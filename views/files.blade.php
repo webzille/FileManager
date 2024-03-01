@@ -26,7 +26,8 @@
             </div>
             <div class="btn-con">
                 <a href="#" class="btn-link" modal="uploadFilesModal">Close</a>
-                <x-form-submit submit="Upload" />
+                <button type="reset" class="btn btn-danger">Reset</button>
+                <button type="submit" class="btn btn-primary">Upload</button>
             </div>
         </div>
     </form>
@@ -36,11 +37,15 @@
             <a class="close" modal="newDirectoryModal">&times;</a>
             <h2>New Directory's Name</h2>
             <div class="modal-content">
-                <x-input-group for="name" type="text" name="name" autofocus />
+                <div class="input-container">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" name="name" autofocus>
+                </div>
             </div>
             <div class="btn-con">
                 <a href="#" class="btn-link" modal="newDirectoryModal">Close</a>
-                <x-form-submit submit="Create" />
+                <button type="reset" class="btn btn-danger">Reset</button>
+                <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </div>
     </form>
@@ -50,11 +55,15 @@
             <a class="close" modal="renameDirectoryModal">&times;</a>
             <h2>Rename Directory</h2>
             <div class="modal-content">
-                <x-input-group for="name" type="text" name="name" class="currentDirectoryName" autofocus />
+                <div class="input-container">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" name="name" class="currentDirectoryName" autofocus>
+                </div>
             </div>
             <div class="btn-con">
                 <a href="#" class="btn-link" modal="renameDirectoryModal">Close</a>
-                <x-form-submit submit="Rename" />
+                <button type="reset" class="btn btn-danger">Reset</button>
+                <button type="submit" class="btn btn-primary">Rename</button>
             </div>
         </div>
     </form>
@@ -119,11 +128,15 @@
             <a class="close" modal="renameFileModal">&times;</a>
             <h2>Rename {{ ucfirst($type) }}</h2>
             <div class="modal-content">
-                <x-input-group for="name" type="text" name="name" autofocus />
+                <div class="input-container">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" name="name" autofocus>
+                </div>
             </div>
             <div class="btn-con">
                 <a href="#" class="btn-link" modal="renameFileModal">Close</a>
-                <x-form-submit submit="Rename" />
+                <button type="reset" class="btn btn-danger">Reset</button>
+                <button type="submit" class="btn btn-primary">Rename</button>
             </div>
         </div>
     </form>
