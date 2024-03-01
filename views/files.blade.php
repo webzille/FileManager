@@ -7,9 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Raleway&family=Lato&family=Open+Sans:wght@300&family=Roboto:wght@100&display=swap">
-    <link rel="stylesheet" href="{{ asset('/build/assets/style/filemanager.css') }}">
-    <link rel="stylesheet" href="{{ asset('/build/assets/style/helpers.css') }}">
-    <link rel="stylesheet" href="{{ asset('/build/assets/style/all.min.css') }}">
+    <link rel="stylesheet" href="{{ packageAsset('/build/assets/style/filemanager.css') }}">
+    <link rel="stylesheet" href="{{ packageAsset('/build/assets/style/helpers.css') }}">
+    <link rel="stylesheet" href="{{ packageAsset('/build/assets/style/all.min.css') }}">
     <title>File Manager</title>
 </head>
 
