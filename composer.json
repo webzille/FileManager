@@ -1,13 +1,22 @@
 {
     "name": "webzille/filemanager",
     "description": "Filemanager for laravel",
+    "license": "MIT",
+    "keywords": [
+        "filemanager",
+        "laravel",
+        "upload",
+        "file",
+        "manager",
+        "image"
+    ],
     "require": {
-        "php": "^7.4"
+        "php": "^7.4",
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/webzille/FileManager"
+            "url": "https://github.com/webzille/filemanager"
         }
     ],
     "autoload": {
