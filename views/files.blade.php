@@ -188,7 +188,7 @@
                             {{ ucfirst($type) }}</a>
                         <ul id="mainTreeViewChildren">
                             @foreach ($folders as $folder)
-                                @include('vendor.webzille-filemanager.partials.folder', ['folder' => $folder])
+                                @include('webzille-filemanager::partials.folder', ['folder' => $folder])
                             @endforeach
                         </ul>
                     </li>
