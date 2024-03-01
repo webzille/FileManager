@@ -41,5 +41,5 @@
             "email": "admin@webzille.com"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }
