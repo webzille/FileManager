@@ -1,5 +1,16 @@
 {
     "name": "webzille/filemanager",
+    "description": "Filemanager for laravel",
+    "require": {
+        "php": "^7.4",
+        "vendor/package": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/webzille/FileManager"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Webzille\\Filemanager\\": "src/",
