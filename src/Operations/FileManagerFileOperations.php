@@ -2,7 +2,6 @@
 
 namespace Webzille\FileManager\Operations;
 
-use Webzille\FileManager\Traits\Path;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
