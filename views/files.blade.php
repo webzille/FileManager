@@ -348,7 +348,7 @@
             const files = e.dataTransfer.files || [];
 
             uploadFiles(files);
-            unhighlight();
+            unhighlight(e);
         }
 
         function copyMainTreeViewToMoveItems() {
