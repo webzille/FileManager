@@ -468,8 +468,6 @@
             }
 
             document.getElementById('breadcrumbContainer').innerHTML = breadcrumbHtml;
-
-            contentUpdated = false;
         }
 
         function toggleSelectAll() {
