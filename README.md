@@ -107,7 +107,6 @@ function setImagePreview(image) {
     const postImagePreview = document.getElementById('post-image-preview');
 
     postImagePreview.style.visibility = 'visible';
-    postImagePreview.classList.add('pointer'); // A class that adds a cursor: pointer; effect on hover
     postImagePreview.style.backgroundImage = 'url(' + image + ')';
 
     const postImagePreviewClose = document.getElementById('post-image-preview-close');
