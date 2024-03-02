@@ -19,7 +19,10 @@ class FileManager
 
         return view('webzille-filemanager::files', [
             'type'      => $this->environment->environment,
-            'root'      => $this->environment->public,
+            'root'      => [
+                'public'    => $this->environment->public,
+                'storage'   => $this->environment->storage
+            ],
             'folders'   => $this->listDirectories($this->environment->public),
             'files'     => json_decode((new FileManagerFileOperations)->listFiles($request)->getContent(), true) ?? [],
         ]);
