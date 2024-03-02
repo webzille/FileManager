@@ -184,7 +184,7 @@
         <div id="directoryListing">
             <aside id="directories">
                 <ul class="directory-listing" id="mainTreeView">
-                    <li><a href="#" data-url="{{ $root }}"><i class="fa-regular fa-folder"></i>
+                    <li><a href="#" data-url="{{ $root['public'] }}"><i class="fa-regular fa-folder"></i>
                             {{ ucfirst($type) }}</a>
                         <ul id="mainTreeViewChildren">
                             @foreach ($folders as $folder)
@@ -195,7 +195,7 @@
                 </ul>
             </aside>
             <div class="breadcrumbs">
-                <div id="breadcrumbContainer"> <i class="fa-solid fa-chevron-right"></i> <a href="#" data-url="{{ $root }}">{{ $type }}</a>
+                <div id="breadcrumbContainer"> <i class="fa-solid fa-chevron-right"></i> <a href="#" data-url="{{ $root['public'] }}">{{ $type }}</a>
                 </div>
             </div>
         </div>
@@ -203,12 +203,12 @@
             @if (count($files) > 0)
                 @foreach ($files as $file)
                     <div class="file" style="background-image: url({{ $file['url'] }})"
-                        data-file="{{ $file['url'] }}">
+                        data-file="{{ $file['path'] }}">
                         <span>{{ $file['name'] }}</span>
                     </div>
                 @endforeach
             @else
-                <p class="noFiles">No {{ $type }}s found.</p>
+                <p class="noFiles">No {{ $type }}(s) found.</p>
             @endif
         </section>
     </main>
@@ -222,8 +222,9 @@
     </footer>
     <script>
         let selectedFiles = [];
-        let currentFolder = '{{ $root }}';
-        const root = '{{ $root }}';
+        let currentFolder = '{{ $root['public'] }}';
+        const root = '{{ $root['public'] }}';
+        const sroot = '{{ $root['storage'] }}';
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         const dropZone = document.getElementById('fileView');
         const moveItems = document.getElementById('moveItems');
@@ -359,6 +360,14 @@
             moveItems.innerHTML = '';
         }
 
+        function toStorage(path) {
+            var directories = path.split('/');
+
+            directories.shift();
+
+            return sroot + directories.join('/');
+        }
+
         function uploadFiles(files) {
             closeModal('uploadFilesModal');
             const formData = new FormData();
@@ -368,7 +377,7 @@
                 formData.append('files[]', file);
             }
 
-            formData.append('directory', currentFolder);
+            formData.append('directory', toStorage(currentFolder));
 
             fetch(filemanagerUploadLink, {
                     method: 'POST',
@@ -401,6 +410,8 @@
         function setCurrentDirectory(directory) {
             currentFolder = directory;
 
+            console.log('Current Directory: '+ currentFolder);
+
             currentFolderElements = document.getElementsByClassName('currentDirectoryName');
 
             Array.from(currentFolderElements).forEach(element => {
@@ -428,12 +439,12 @@
 
                     if (response.length > 0) {
                         response.forEach(file => {
-                            folderContent += `<div class="file" style="background-image: url('${file.url}')" data-file="${file.url}">
+                            folderContent += `<div class="file" style="background-image: url('${file.url}')" data-file="${file.path}">
                                             <span>${file.name}</span>
                                         </div>`;
                         });
                     } else {
-                        folderContent += `<p class="noFiles">No {{ $type }}s found.</p>`;
+                        folderContent += `<p class="noFiles">No {{ $type }}(s) found.</p>`;
                     }
 
                     dropZone.innerHTML = folderContent;
@@ -578,24 +589,21 @@
             if (selectedFiles.length === 1) {
                 var selectedFile = selectedFiles[0];
 
-                var urlObject = new URL(selectedFile);
+                var filename = selectedFile.split('/').pop();
+                console.log('File Name: ' + filename);
 
-                var pathname = urlObject.pathname;
-                console.log('Path Name: '+ pathname);
+                // Get the base domain name
+                var baseDomain = window.location.origin;
 
-                var filename = pathname.split('/').pop();
+                // Combine the base domain with the selectedFile
+                var absolutePath = baseDomain + '/' + selectedFile;
 
-                console.log('File Name: '+ filename);
-
-                console.log(document.getElementById('fileLink'));
-
-                document.getElementById('fileLink').href = selectedFile;
-
-                console.log(document.getElementById('fileLink'));
+                document.getElementById('fileLink').href = absolutePath;
                 document.getElementById('previewFileName').innerHTML = filename;
-                document.getElementById('filePreview').style.backgroundImage = "url('" + selectedFile + "')";
+                document.getElementById('filePreview').style.backgroundImage = "url('" + absolutePath + "')";
             } else {
                 console.warn('Need to select one file before previewing.');
+                // Provide feedback to the user about the requirement to select one file
             }
         }
 
@@ -613,6 +621,10 @@
 
         function moveSelectedFiles(moveTo) {
             if (selectedFiles.length !== 0) {
+                selectedFiles = selectedFiles.map(function(path) {
+                    return toStorage(path);
+                });
+
                 fetch(`{{ route('filemanager.move') }}`, {
                         method: 'POST',
                         headers: {
@@ -621,7 +633,7 @@
                         },
                         body: JSON.stringify({
                             selectedFiles: selectedFiles,
-                            destination: moveTo
+                            destination: toStorage(moveTo)
                         })
                     })
                     .then(response => response.json())
@@ -645,6 +657,10 @@
             closeModal('deleteFileModal');
 
             if (selectedFiles.length !== 0) {
+                selectedFiles = selectedFiles.map(function(path) {
+                    return toStorage(path);
+                });
+
                 fetch('{{ route('filemanager.delete') }}', {
                         method: 'POST',
                         headers: {
@@ -676,6 +692,10 @@
             closeModal('renameFileModal');
 
             if (selectedFiles.length === 1) {
+                selectedFiles = selectedFiles.map(function(path) {
+                    return toStorage(path);
+                });
+
                 fetch('{{ route('filemanager.rename') }}', {
                         method: 'POST',
                         headers: {
@@ -685,7 +705,8 @@
                         body: JSON.stringify({
                             _token: csrfToken,
                             selectedFile: selectedFiles[0],
-                            newFileName: newFileName
+                            newFileName: newFileName,
+                            currentDirectory: currentFolder
                         })
                     })
                     .then(response => response.json())
@@ -705,6 +726,10 @@
         }
 
         function downloadSelectedFiles() {
+            selectedFiles = selectedFiles.map(function(path) {
+                return toStorage(path);
+            });
+
             fetch('{{ route('filemanager.download') }}', {
                     method: 'POST',
                     headers: {
@@ -855,8 +880,9 @@
                         },
                         body: JSON.stringify({
                             _token: csrfToken,
-                            currentFolder: currentFolder,
-                            destination: moveTo
+                            currentFolder: toStorage(currentFolder),
+                            destination: toStorage(moveTo),
+                            publicDestination: moveTo
                         })
                     })
                     .then(response => response.json())
@@ -865,6 +891,7 @@
 
                         updateDirectoryTree()
 
+                        console.log('Destination: '+ response.destination);
                         fetchFolderContent(response.destination);
                         clearSelectedFiles();
                     })
