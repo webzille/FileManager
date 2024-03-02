@@ -14,7 +14,6 @@ class FileManagerFileOperations {
         try {
             $filesToMove = $request->input('selectedFiles');
             $moveTo = $request->input('destination');
-            Log::info('Move To: '. $moveTo);
 
             if(!File::isDirectory(($moveTo))) {
                 return response()->json(['error' => 'Unknown directory location: ' . $moveTo], 404);
@@ -22,9 +21,7 @@ class FileManagerFileOperations {
 
             foreach ($filesToMove as $file) {
                 $currentFile = $file;
-                Log::info('Current File: '. $currentFile);
                 $destination = $moveTo . '/' . basename($file);
-                Log::info('Destination: '. $destination);
 
                 File::move($currentFile, $destination);
             }
