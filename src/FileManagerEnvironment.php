@@ -15,7 +15,7 @@ class FileManagerEnvironment
     public function setEnvironment($environment): self
     {
         $this->environment = $environment;
-        $this->storage = str_replace('\\', '/', storage_path('app/public/' . Auth()->User()->id . '/' . $environment));
+        $this->storage = str_replace('\\', '/', storage_path('app/public/'));
         $this->public = 'storage/' . Auth()->User()->id .'/' . $environment;
         $this->shared = 'storage/shared/' . $environment;
 
