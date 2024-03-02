@@ -6,9 +6,7 @@ filemanager more configurable.
 
 Many other features are planned... this is a dev version.
 
-To get the package so far, you need to add the `:dev-main` at the end of the require statement
-
-> composer require webzille/filemanager:dev-main
+> composer require webzille/filemanager
 
 After requiring the package, you need to create a symbolic link to where the filemanager will upload the files to
 
