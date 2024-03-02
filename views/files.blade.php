@@ -903,7 +903,6 @@
         }
 
         function updateDirectoryTree() {
-            console.log('Updating Directory Tree: '+ root);
             fetch('{{ route('filemanager.folder.list') }}', {
                     method: 'POST',
                     headers: {
@@ -919,8 +918,6 @@
                 .then(response => {
                     const mainTreeViewChildren = document.getElementById('mainTreeViewChildren');
                     directories = response.directories;
-
-                    console.log('Should be updating now!!');
 
                     mainTreeViewChildren.innerHTML = '';
                     directories.forEach(directory => {
