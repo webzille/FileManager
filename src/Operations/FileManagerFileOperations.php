@@ -9,21 +9,23 @@ use Illuminate\Support\Facades\Log;
 use ZipArchive;
 
 class FileManagerFileOperations {
-    use Path;
 
     public function moveFile(Request $request)
     {
         try {
             $filesToMove = $request->input('selectedFiles');
             $moveTo = $request->input('destination');
+            Log::info('Move To: '. $moveTo);
 
             if(!File::isDirectory(($moveTo))) {
                 return response()->json(['error' => 'Unknown directory location: ' . $moveTo], 404);
             }
 
             foreach ($filesToMove as $file) {
-                $currentFile = $this->preparePath($file);
-                $destination = $this->preparePath($moveTo) . '/' . basename($file);
+                $currentFile = $file;
+                Log::info('Current File: '. $currentFile);
+                $destination = $moveTo . '/' . basename($file);
+                Log::info('Destination: '. $destination);
 
                 File::move($currentFile, $destination);
             }
@@ -41,7 +43,7 @@ class FileManagerFileOperations {
             
             foreach($files as $file)
             {
-                $filePath = $this->preparePath($file);
+                $filePath = $file;
                 File::delete($filePath);
             }
             $parsedUrl = parse_url($file);
@@ -59,24 +61,22 @@ class FileManagerFileOperations {
     public function renameFile(Request $request)
     {
         $file = $request->input('selectedFile');
-        $parsedUrl = parse_url($file);
+        $currentDirectory = $request->input('currentDirectory');
     
-        $oldFilePath = $this->preparePath($file);
-    
-        $extension = pathinfo($oldFilePath, PATHINFO_EXTENSION);
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
         $newFileName = $request->input('newFileName') . ".{$extension}";
-        $newFilePath = str_replace('\\', '/', dirname($oldFilePath) . '/' . $newFileName);
+        $newFilePath = str_replace('\\', '/', dirname($file) . '/' . $newFileName);
 
         try {
-            if (File::move($oldFilePath, $newFilePath)) {
+            if (File::move($file, $newFilePath)) {
                 return response()->json([
-                    'directory' => substr(dirname($parsedUrl['path']), 1),
+                    'directory' => $currentDirectory,
                     'message'   => "{$file} was renamed to {$newFileName}."
                 ]);
             }
     
             return response()->json([
-                'directory' => substr(dirname($parsedUrl['path']), 1),
+                'directory' => $currentDirectory,
                 'message' => "{$file} failed to be renamed to {$newFileName}."
             ]);
         } catch (\Exception $e) {
@@ -98,8 +98,9 @@ class FileManagerFileOperations {
                 $folderContent = [];
                 foreach ($files as $file) {
                     $folderContent[] = [
-                        'name' => $file->getFilename(),
-                        'url' => asset(str_replace('\\', '/', $file->getPathname())),
+                        'name'  => $file->getFilename(),
+                        'path'  => str_replace('\\', '/', $file->getPathname()),
+                        'url'   => asset(str_replace('\\', '/', $file->getPathname())),
                     ];
                 }
 
@@ -119,7 +120,7 @@ class FileManagerFileOperations {
             $selectedFiles = $request->input('selectedFiles');
         
             if (count($selectedFiles) === 1) {
-                $downloadFilePath = $this->preparePath($selectedFiles[0]);
+                $downloadFilePath = $selectedFiles[0];
                 return response()->download($downloadFilePath);
             } elseif (count($selectedFiles) > 1) {
                 $zipFileName = 'downloaded_files.zip';
@@ -129,7 +130,7 @@ class FileManagerFileOperations {
                 
                 if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
                     foreach ($selectedFiles as $file) {
-                        $file = $this->preparePath($file);
+                        $file = $file;
                         $zip->addFile($file, basename($file));
                     }
         
@@ -157,9 +158,9 @@ class FileManagerFileOperations {
             foreach ($files as $file) {
                 $fileName = $file->getClientOriginalName();
                 
-                if(!$file->move($this->preparePath($directory), $fileName))
+                if(!$file->move($directory, $fileName))
                 {
-                    Log::error('Failed uploading ' . $fileName . ' into ' . $this->preparePath($directory));
+                    Log::error('Failed uploading ' . $fileName . ' into ' . $directory);
                 }
             }
 
