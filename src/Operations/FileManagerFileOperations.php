@@ -20,10 +20,9 @@ class FileManagerFileOperations {
             }
 
             foreach ($filesToMove as $file) {
-                $currentFile = $file;
                 $destination = $moveTo . '/' . basename($file);
 
-                File::move($currentFile, $destination);
+                File::move($file, $destination);
             }
             return response()->json(['message' => 'Files moved successfully']);
         } catch (\Exception $e) {
