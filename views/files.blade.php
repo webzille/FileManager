@@ -784,7 +784,7 @@
                 .then(response => {
                     console.log(response.message);
 
-                    updateDirectoryTree()
+                    updateDirectoryTree();
 
                     fetchFolderContent(currentFolder + '/' + directoryName);
                     clearSelectedFiles();
@@ -855,7 +855,7 @@
                 .then(response => {
                     console.log(response.message);
 
-                    updateDirectoryTree()
+                    updateDirectoryTree();
 
                     fetchFolderContent(response.parentDirectory);
                     clearSelectedFiles();
@@ -887,7 +887,7 @@
                     .then(response => {
                         console.log(response.message);
 
-                        updateDirectoryTree()
+                        updateDirectoryTree();
 
                         console.log('Destination: '+ response.destination);
                         fetchFolderContent(response.destination);
@@ -903,6 +903,7 @@
         }
 
         function updateDirectoryTree() {
+            console.log('Updating Directory Tree: '+ root);
             fetch('{{ route('filemanager.folder.list') }}', {
                     method: 'POST',
                     headers: {
@@ -918,6 +919,8 @@
                 .then(response => {
                     const mainTreeViewChildren = document.getElementById('mainTreeViewChildren');
                     directories = response.directories;
+
+                    console.log('Should be updating now!!');
 
                     mainTreeViewChildren.innerHTML = '';
                     directories.forEach(directory => {
@@ -942,9 +945,11 @@
             parentElement.appendChild(newDirectoryItem);
 
             if (directory.subDirectories && directory.subDirectories.length > 0) {
+                var newDirectoryTree = document.createElement('ul');
                 directory.subDirectories.forEach(subDirectory => {
-                    addDirectoryToTree(newDirectoryItem, subDirectory);
+                    addDirectoryToTree(newDirectoryTree, subDirectory);
                 });
+                newDirectoryItem.appendChild(newDirectoryTree);
             }
         }
 
