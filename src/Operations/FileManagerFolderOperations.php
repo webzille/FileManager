@@ -3,7 +3,6 @@
 namespace Webzille\FileManager\Operations;
 
 use Webzille\FileManager\FileManager;
-use Webzille\FileManager\Traits\Path;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Log;
 
 class FileManagerFolderOperations {
-    use Path;
 
     public function newFolder(Request $request)
     {
@@ -38,17 +36,17 @@ class FileManagerFolderOperations {
         try {
             $currentDirectory = $request->input('currentFolder');
             $destination = $request->input('destination');
+            $publicDestination = $request->input('publicDestination');
 
-            $currentPath = $this->preparePath($currentDirectory);
-            $directoryName = basename($currentPath);
-            $destinationPath = $this->preparePath($destination) . "/$directoryName";
+            $directoryName = basename($currentDirectory);
+            $destinationPath = $destination . "/$directoryName";
 
-            if (File::exists($currentPath)) {
-                File::move($currentPath, $destinationPath);
+            if (File::exists($currentDirectory)) {
+                File::move($currentDirectory, $destinationPath);
 
                 return response()->json([
                     'message'       => 'Directory moved successfully',
-                    'destination'   => $destination . "/" . basename($currentPath),
+                    'destination'   => $publicDestination . "/$directoryName",
                     'directoryName' => $directoryName
                 ], 200);
             } else {
