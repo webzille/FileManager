@@ -4,6 +4,19 @@ In the meantime it is using the `File` facade for all files operation, which mea
 It is planned to be switched over to the `storage()` facade to enable integration with AWS as well as making the
 filemanager more configurable.
 
+The features it currently has:
+* Upload single file VIA upload form
+* Upload multiple files VIA drag/drop
+* Rename files
+* Move files
+* Delete files
+* Create new directories
+* Rename directories
+* Move directories
+* Delete directories (and the files in the directories)
+* Download files from filemanager to your pc
+* Previewing images
+
 Many other features are planned... this is a dev version.
 
 > composer require webzille/filemanager
