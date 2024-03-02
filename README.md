@@ -17,6 +17,8 @@ The features it currently has:
 * Download files from filemanager to your pc
 * Previewing images
 
+At the moment there are no validation on uploading the files and no config files...
+
 Many other features are planned... this is a dev version.
 
 > composer require webzille/filemanager
